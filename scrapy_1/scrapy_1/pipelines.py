@@ -21,13 +21,12 @@ class Scrapy1Pipeline:
 
     def create_table(self):
         self.my_cursor.execute("DROP TABLE IF EXISTS my_table")
-        self.my_cursor.execute("""
-                            create table my_table(
-                                title text,
-                                author text,
-                                tag text
-                            )
-                            """)
+        self.my_cursor.execute(""" create table my_table(
+            title text,
+            author text,
+            tag text  
+            )
+            """)
 
     def process_item(self, item, spider):
         self.store_db(item)
@@ -36,10 +35,10 @@ class Scrapy1Pipeline:
 
     def store_db(self,item):
         self.my_cursor.execute('''
-                        insert into my_table values(?,?,?)''',(
-                            item ['title'][0],
-                            item ['author'][0],
-                            item ['tag'][0]
-                        ))
+        insert into my_table values(?,?,?)''',(
+        item['title'][0],
+        item['author'][0],
+        item['tag'][0]
+        ))
 
         self.my_db.commit()
